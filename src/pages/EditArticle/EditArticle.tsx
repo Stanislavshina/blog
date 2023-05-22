@@ -104,7 +104,7 @@ const EditArticle: React.FC = () => {
                 required: 'Укажите тег',
               })}
               placeholder="Tag"
-              error={errors.tagList?.[ind] ? 'Укажите тэг' : undefined}
+              error={(`tagList.${ind}.name` as any) ? 'Укажите тэг' : undefined}
             />
             <Button typeButton={'deleteTag'} children={'Delete tag'} linkType={'simple'} onSubmit={() => remove(ind)} />
             {ind === fields.length - 1 && (
