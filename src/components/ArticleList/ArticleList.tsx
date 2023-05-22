@@ -3,14 +3,12 @@ import { nanoid } from 'nanoid';
 import React, { useCallback, useEffect } from 'react';
 import { fetchArticles, setNextPage } from '../../store/slices/articleSlice';
 import { useAppDispatch, useAppSelector } from '../../store/storeHooks';
-import cl from './ArticleList.module.scss'
+import cl from './ArticleList.module.scss';
 import ArticlePreview from '../ArticlePreview/ArticlePreview';
 
 const ArticleList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { articles, page, totalArticlesCount } = useAppSelector(
-    (state) => state.artickles
-  );
+  const { articles, page, totalArticlesCount } = useAppSelector((state) => state.artickles);
 
   const getData = useCallback(() => {
     return dispatch(fetchArticles((page - 1) * 5));
@@ -21,8 +19,8 @@ const ArticleList: React.FC = () => {
   }, [getData]);
 
   return (
-    <main className={cl["main"]}>
-      <ul className={cl["posts-list"]}>
+    <main className={cl['main']}>
+      <ul className={cl['posts-list']}>
         {articles.map((art) => (
           <ArticlePreview key={nanoid()} article={art} />
         ))}

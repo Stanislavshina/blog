@@ -1,32 +1,22 @@
-import React from "react";
-import cl from "./PostItem.module.scss";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { Article } from "../../types/ArticleTypes";
-import PostHeader from "../PostHeader/PostHeader";
-import { truncateText } from "../../utils/truncateText";
+import React from 'react';
+import cl from './PostItem.module.scss';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { ArticleTypes } from '../../types/ArticleTypes';
+import ArticleHeader from '../ArticleHeader/ArticleHeader';
+import { truncateText } from '../../utils/truncate';
 
 interface PostPreviewProps {
-  post: Article;
+  post: ArticleTypes;
 }
 
 const Article: React.FC<PostPreviewProps> = ({ post }) => {
-  const {
-    author,
-    body,
-    favorited,
-    favoritesCount,
-    title,
-    updatedAt,
-    tagList,
-    slug,
-  } = post;
+  const { author, body, favoritesCount, title, updatedAt, tagList, slug } = post;
   const { image, username } = author;
   const bodyText = truncateText(body, 100);
 
   return (
-    <li className={cl["preview"]}>
-      <PostHeader
-        favorited={favorited}
+    <li className={cl['preview']}>
+      <ArticleHeader
         favoritesCount={favoritesCount}
         title={title}
         slug={slug}
@@ -36,9 +26,7 @@ const Article: React.FC<PostPreviewProps> = ({ post }) => {
         tagList={tagList}
         link={true}
       />
-      <main className={cl["preview__body"]}>
-        <ReactMarkdown children={bodyText} />
-      </main>
+      <main className={cl['preview__body']}>{bodyText && <ReactMarkdown children={bodyText} />}</main>
     </li>
   );
 };

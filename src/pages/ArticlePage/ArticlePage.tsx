@@ -36,7 +36,7 @@ const ArticlePage: React.FC = () => {
         <Popconfirm
           placement="right"
           title="Are you sure to delete this article?"
-          onConfirm={() => handleDelete(id)}
+          onConfirm={() => handleDelete(id as string)}
           okText="Yes"
           cancelText="No"
         >

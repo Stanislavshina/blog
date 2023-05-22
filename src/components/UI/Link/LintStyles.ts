@@ -6,7 +6,7 @@ export const baseLink = css`
   color: rgba(0, 0, 0, 0.85);
   font-size: 18px;
   line-height: 28px;
-  &:hover{
+  &:hover {
     color: inherit;
   }
 `;
@@ -26,4 +26,3 @@ export const Form = styled(NavLink)`
   font-size: 12px;
   line-height: 20px;
 `;
-

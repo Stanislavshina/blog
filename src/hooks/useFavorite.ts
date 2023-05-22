@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../store/storeHooks";
-import { setFavorited, deleteFavorited } from "../api/article/favorited";
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '../store/storeHooks';
+import { setFavorited, deleteFavorited } from '../api/article/favorited';
 
 const useFavorite = (slug: string, favoritesCount: number) => {
   const { isAuth, token } = useAppSelector((state) => state.user);
@@ -9,36 +9,38 @@ const useFavorite = (slug: string, favoritesCount: number) => {
 
   const handleClick = () => {
     if (!favorite) {
-    if(token) {setFavorited(slug, token)
-        .then((d: unknown) => {{
-          const articleSlug = (d as { article: { slug: string } }).article.slug;  
-          localStorage.setItem(articleSlug, articleSlug)
-        }
+      if (token) {
+        setFavorited(slug, token)
+          .then((d: unknown) => {
+            {
+              const articleSlug = (d as { article: { slug: string } }).article.slug;
+              localStorage.setItem(articleSlug, articleSlug);
+            }
+          })
+          .then(() => {
+            setFavorite(true);
+            setCount((count) => count + 1);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       }
-        )
-        .then(() => {
-          setFavorite(true);
-          setCount((count) => count + 1);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }} else {
-      if(token){
-      deleteFavorited(slug, token)
-        .then((d: unknown) =>{
-        const articleSlug = (d as { article: { slug: string } }).article.slug;  
-        localStorage.removeItem(articleSlug)
-        }
-        )
-        .then(() => {
-          setFavorite(false);
-          setCount((count) => count - 1);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }}
+    } else {
+      if (token) {
+        deleteFavorited(slug, token)
+          .then((d: unknown) => {
+            const articleSlug = (d as { article: { slug: string } }).article.slug;
+            localStorage.removeItem(articleSlug);
+          })
+          .then(() => {
+            setFavorite(false);
+            setCount((count) => count - 1);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    }
   };
 
   useEffect(() => {

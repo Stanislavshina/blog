@@ -31,12 +31,12 @@ const CreateArticle: React.FC = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormState>({ defaultValues, mode: 'onBlur' });
+  } = useForm<Default>({ defaultValues, mode: 'onBlur' });
 
   const { fields, append, remove } = useFieldArray<FormState['tagList'][0] | any>({ control, name: 'tagList' });
 
-  const handleClick = async (data: FormState) => {
-    await createArticle(data, token);
+  const handleClick = async (data: Default) => {
+    await createArticle(data as any, token);
     navigate('/');
   };
   const errorTitle = errors.title ? errors.title.message : undefined;
@@ -80,11 +80,11 @@ const CreateArticle: React.FC = () => {
           <div key={field.id} style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <Input
               name={'tags'}
-              register={register(`tagList.${ind}.name` as const, {
+              register={register(`tagList.${ind}.name` as any, {
                 required: 'Укажите тег',
               })}
               placeholder="Tag"
-              error={errors.tagList?.[ind]?.name ? 'Укажите тэг' : undefined}
+              error={errors.tagList?.[ind] ? 'Укажите тэг' : undefined}
             />
             <Button typeButton={'deleteTag'} children={'Delete tag'} linkType={'simple'} onSubmit={() => remove(ind)} />
             {ind === fields.length - 1 && (

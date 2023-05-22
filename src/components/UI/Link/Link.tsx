@@ -2,9 +2,9 @@ import { ReactNode } from 'react';
 import { Form, Primary, Simple } from './LintStyles';
 
 interface LinkProps {
-  to: string,
-  type: string,
-  children: ReactNode
+  to: string;
+  type: string;
+  children: ReactNode;
 }
 
 const Link: React.FC<LinkProps> = ({ to, type, children }) => {

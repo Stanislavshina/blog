@@ -5,11 +5,11 @@ export function truncateText(text: string, maxLength: number) {
   }
 
   const truncated = text.substring(0, maxLength);
-  const lastSpaceIndex = truncated.lastIndexOf(" ");
+  const lastSpaceIndex = truncated.lastIndexOf(' ');
 
   if (lastSpaceIndex >= 0) {
-    return truncated.substring(0, lastSpaceIndex) + "...";
+    return truncated.substring(0, lastSpaceIndex) + '...';
   } else {
-    return truncated + "...";
+    return truncated + '...';
   }
 }

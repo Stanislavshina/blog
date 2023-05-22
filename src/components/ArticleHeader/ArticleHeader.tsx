@@ -1,11 +1,11 @@
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
-import { Avatar, Button } from "antd";
-import { converTime } from "../../utils/convertTime";
-import { nanoid } from "nanoid";
-import cl from "./ArticleHeader.module.scss";
-import useFavorite from "../../hooks/useFavorite";
-import Link from "../UI/Link/Link";
-import { useAppSelector } from "../../store/storeHooks";
+import { HeartFilled, HeartOutlined } from '@ant-design/icons';
+import { Avatar, Button } from 'antd';
+import { converTime } from '../../utils/convertTime';
+import { nanoid } from 'nanoid';
+import cl from './ArticleHeader.module.scss';
+import useFavorite from '../../hooks/useFavorite';
+import Link from '../UI/Link/Link';
+import { useAppSelector } from '../../store/storeHooks';
 
 interface ArticleHeaderProps {
   slug: string;
@@ -29,20 +29,20 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   link,
 }) => {
   const { favorite, count, handleClick } = useFavorite(slug, favoritesCount);
-  const {isAuth} = useAppSelector(state=> state.user)
+  const { isAuth } = useAppSelector((state) => state.user);
 
   const titleLink = link ? (
-    <Link to={`articles/${slug}`} type={"primary"} >
+    <Link to={`articles/${slug}`} type={'primary'}>
       {title}
     </Link>
   ) : (
-    <h4 className={cl["header__title"]}>{title}</h4>
+    <h4 className={cl['header__title']}>{title}</h4>
   );
   const date = converTime(updatedAt);
   const tags = tagList.length ? (
-    <ul className={cl["header__tag-list"]}>
+    <ul className={cl['header__tag-list']}>
       {tagList.map((el: string) => (
-        <li key={nanoid()} className={cl["header__tag"]}>
+        <li key={nanoid()} className={cl['header__tag']}>
           {el}
         </li>
       ))}
@@ -51,29 +51,29 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   const postButton = (
     <Button
       onClick={handleClick}
-      style={{ border: "none", width: "13px" }}
+      style={{ border: 'none', width: '13px' }}
       disabled={!isAuth}
-      icon={favorite ? <HeartFilled style={{ color: "#FF0707" }} /> : <HeartOutlined />}
+      icon={favorite ? <HeartFilled style={{ color: '#FF0707' }} /> : <HeartOutlined />}
     />
   );
   return (
-    <header className={cl["header"]}>
-      <div className={cl["header__left-col"]}>
-        <div className={cl["header__title-block"]}>
+    <header className={cl['header']}>
+      <div className={cl['header__left-col']}>
+        <div className={cl['header__title-block']}>
           {titleLink}
-          <div className={cl["header__favorited"]}>
+          <div className={cl['header__favorited']}>
             {postButton}
-            <span className={cl["header__favorited-span"]}>{count}</span>
+            <span className={cl['header__favorited-span']}>{count}</span>
           </div>
         </div>
         {tags}
       </div>
-      <div className={cl["header__right-col"]}>
+      <div className={cl['header__right-col']}>
         <div className="header__author-bio">
-          <p className={cl["header__author-name"]}>{username}</p>
-          <span className={cl["header__time"]}>{date}</span>
+          <p className={cl['header__author-name']}>{username}</p>
+          <span className={cl['header__time']}>{date}</span>
         </div>
-        <Avatar src={image} style={{ width: "46px", height: "46px" }} />
+        <Avatar src={image} style={{ width: '46px', height: '46px' }} />
       </div>
     </header>
   );

@@ -4,5 +4,9 @@ export interface FormState extends ArticleTypes {
   title: string;
   description: string;
   body: string;
-  tagList: string[];
+  tagList: [
+    {
+      name: string;
+    }
+  ];
 }

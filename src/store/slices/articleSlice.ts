@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ArticleTypes } from "../../types/ArticleTypes";
-import { getArticles } from "../../api/article/article";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { ArticleTypes } from '../../types/ArticleTypes';
+import { getArticles } from '../../api/article/article';
 
 type ArticleState = {
   articles: ArticleTypes[];
@@ -10,15 +10,10 @@ type ArticleState = {
   error: string | null;
 };
 
-export const fetchArticles = createAsyncThunk(
-  "articles/fetchArticles",
-  getArticles
-);
-
-
+export const fetchArticles = createAsyncThunk('articles/fetchArticles', getArticles);
 
 const articleSlice = createSlice({
-  name: "articles",
+  name: 'articles',
   initialState: {
     articles: [],
     isLoading: false,
@@ -42,8 +37,8 @@ const articleSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchArticles.rejected, (state) => {
-        state.error = "cant fetch it";
-      })
+        state.error = 'cant fetch it';
+      });
   },
 });
 
