@@ -11,7 +11,7 @@ export interface ArticleTypes {
   favorited: boolean;
   favoritesCount: number;
   slug: string;
-  tagList: string[];
+  tagList: [{ name: string }];
   title: string;
   updatedAt: string;
 }

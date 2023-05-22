@@ -9,8 +9,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "format": "prettier src --write",
-    "preview": "vite preview",
-    "prepare": "husky install"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",

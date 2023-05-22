@@ -1,6 +1,4 @@
-import { ArticleTypes } from './ArticleTypes';
-
-export interface FormState extends ArticleTypes {
+export interface FormState {
   title: string;
   description: string;
   body: string;

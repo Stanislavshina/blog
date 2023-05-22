@@ -61,8 +61,8 @@ const SignUp: React.FC = () => {
         name={'Email'}
         register={register('email', {
           required: true,
-          // eslint-disable-next-line no-useless-escape
           pattern:
+            // eslint-disable-next-line no-useless-escape
             /^(?:(?:[^<>()[\]\\.,;:\s@\"]+(?:\.[^<>()[\]\\.,;:\s@\"]+)*)|\".+?\")@(?:(?:(?!-)[a-z0-9\-]{1,63}(?<!-)\.)+[a-z]{2,})$/i,
         })}
         placeholder="Email"

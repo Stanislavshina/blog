@@ -7,14 +7,14 @@ import { useAppSelector } from '../../store/storeHooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import Form from '../../components/UI/Form/Form';
 import axios from 'axios';
-import Article from '../../components/Article/Article';
 import { Spin } from 'antd';
 import { updateArticle } from '../../api/article/article';
+import { ArticleTypes } from '../../types/ArticleTypes';
 
 const EditArticle: React.FC = () => {
   const navigate = useNavigate();
   const { token } = useAppSelector((state) => state.user);
-  const [article, setArticle] = useState<Article | null>();
+  const [article, setArticle] = useState<ArticleTypes | null>();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
@@ -31,7 +31,7 @@ const EditArticle: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormState>({ defaultValues, mode: 'onBlur' });
+  } = useForm<any>({ defaultValues, mode: 'onBlur' });
   const { fields, append, remove } = useFieldArray<FormState['tagList'][0] | any>({ control, name: 'tagList' });
   useEffect(() => {
     axios
@@ -51,7 +51,7 @@ const EditArticle: React.FC = () => {
       .finally(() => setLoading(false));
   }, [append, id, reset]);
 
-  const handleClick = async (data: FormState) => {
+  const handleClick = async (data: any) => {
     await updateArticle(id, data, token);
     navigate('/');
   };

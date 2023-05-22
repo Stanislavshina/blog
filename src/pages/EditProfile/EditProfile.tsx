@@ -47,8 +47,8 @@ const EditProfile: React.FC = () => {
         name={'Email'}
         register={register('email', {
           required: true,
-          // eslint-disable-next-line no-useless-escape
           pattern:
+            // eslint-disable-next-line no-useless-escape
             /^(?:(?:[^<>()[\]\\.,;:\s@\"]+(?:\.[^<>()[\]\\.,;:\s@\"]+)*)|\".+?\")@(?:(?:(?!-)[a-z0-9\-]{1,63}(?<!-)\.)+[a-z]{2,})$/i,
         })}
         label="Email"
@@ -67,7 +67,9 @@ const EditProfile: React.FC = () => {
         type="url"
         name={'image'}
         register={register('image', {
-          pattern: /^https?:\/\/.+/,
+          pattern:
+            // eslint-disable-next-line no-useless-escape
+            /^https?:\/\/.+/,
         })}
         placeholder="Image"
         label="Avatar"
