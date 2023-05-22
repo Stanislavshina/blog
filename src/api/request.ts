@@ -1,11 +1,11 @@
-import axios, { Method } from "axios";
+import axios, { Method } from 'axios';
 
-const baseUrl = "https://blog.kata.academy/api";
+const baseUrl = 'https://blog.kata.academy/api';
 interface RequestOptions<T> {
   url: string;
   method: Method;
   data?: T;
-  token?: string | null;
+  token?: string | null | undefined;
   slug?: string;
 }
 
@@ -20,6 +20,6 @@ export const sendRequest = async <T>(options: RequestOptions<T>): Promise<T> => 
     });
     return response.data as T;
   } catch (error) {
-    throw new Error("nope");
+    throw new Error('nope');
   }
 };

@@ -1,22 +1,18 @@
-
-import {sendRequest} from '../request';
-import { FormState } from "../../types/Form";
-import { ArticleTypes } from "../../types/ArticleTypes";
-
+import { sendRequest } from '../request';
+import { FormState } from '../../types/Form';
+import { ArticleTypes } from '../../types/ArticleTypes';
 
 interface ArticlesResponse {
   articles: ArticleTypes[];
   articlesCount: number;
 }
 
-
-
-export const getArticles = async (offset: number): Promise<ArticlesResponse>  => {
+export const getArticles = async (offset: number): Promise<ArticlesResponse> => {
   try {
-    const response = await sendRequest({
+    const response = (await sendRequest({
       url: `/articles?limit=5&offset=${offset}`,
-      method: "get",
-    }) as ArticlesResponse;
+      method: 'get',
+    })) as ArticlesResponse;
 
     return response;
   } catch (error) {
@@ -24,13 +20,13 @@ export const getArticles = async (offset: number): Promise<ArticlesResponse>  =>
   }
 };
 
-export const createArticle = async (data: FormState, token: string | null) => {
+export const createArticle = async (data: FormState, token: string | null | undefined) => {
   const { title, description, body, tagList } = data;
 
   try {
     const res = await sendRequest({
-      url: "/articles",
-      method: "post",
+      url: '/articles',
+      method: 'post',
       data: {
         article: {
           title,
@@ -44,16 +40,16 @@ export const createArticle = async (data: FormState, token: string | null) => {
 
     return res;
   } catch (error) {
-    throw new Error("error");
+    throw new Error('error');
   }
 };
 
-export const updateArticle = async (data: ArticleTypes, token: string | null) => {
+export const updateArticle = async (slug: string | undefined, data: ArticleTypes, token: string | null | undefined) => {
   try {
     const { title, description, body } = data;
     const res = await sendRequest({
-      url: "/articles",
-      method: "put",
+      url: `/articles/${slug}`,
+      method: 'put',
       data: {
         article: {
           title,
@@ -66,6 +62,18 @@ export const updateArticle = async (data: ArticleTypes, token: string | null) =>
 
     return res;
   } catch (error) {
-    throw new Error("error");
+    throw new Error('Error updating article');
+  }
+};
+
+export const deleteArticle = async (articleSlug: string, token: string | null | undefined): Promise<void> => {
+  try {
+    await sendRequest({
+      url: `/articles/${articleSlug}`,
+      method: 'DELETE',
+      token,
+    });
+  } catch (error) {
+    throw new Error('Не удалось удалить статью.');
   }
 };

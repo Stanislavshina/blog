@@ -1,10 +1,4 @@
-import styled, { css } from "styled-components";
-
-
-
-
-
-
+import styled from 'styled-components';
 
 export const HeaderStyled = styled.header`
   width: 100%;
@@ -19,12 +13,12 @@ export const ButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 30px
-`
+  gap: 30px;
+`;
 
 export const AvatarGroup = styled.div`
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 15px
-`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+`;

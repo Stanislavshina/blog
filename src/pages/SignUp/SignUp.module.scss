@@ -1,0 +1,30 @@
+.checkbox {
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid #9abbce;
+  border-radius: 2px;
+  appearance: none;
+  cursor: pointer;
+
+  &:checked {
+    background-image: url(check.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-color: #2196f3;
+    background-color: #2196f3;
+    cursor: pointer;
+  }
+}
+.label__check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.error {
+  border-color: #f5222d;
+  color: red;
+  &:focus + .input {
+    border-color: #f5222d;
+  }
+}
