@@ -1,5 +1,6 @@
 import { User } from '../../types/User';
 import { sendRequest } from '../request';
+import Cookies from 'js-cookie';
 
 interface UserResponse {
   user: User;
@@ -26,6 +27,22 @@ export const getLogin = async (data: Data): Promise<UserResponse> => {
   }
 };
 
+export const checkAndLogToken = async () => {
+  const token = Cookies.get('token');
+  const password = Cookies.get('password');
+  if (!token) return;
+  try {
+    const res = (await sendRequest({
+      url: '/user',
+      method: 'get',
+      token,
+    })) as UserResponse;
+    return { ...res.user, password };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const setNewUser = async (data: User): Promise<UserResponse> => {
   try {
     const { email, password, username } = data;
@@ -36,6 +53,12 @@ export const setNewUser = async (data: User): Promise<UserResponse> => {
         user: { username, email, password },
       },
     })) as UserResponse;
+
+    if (res.user && res.user.token) {
+      Cookies.set('token', res.user.token, { expires: 7, secure: true });
+      Cookies.set('password', password, { expires: 7, secure: true });
+    }
+
     return res;
   } catch (error) {
     throw new Error('nope');

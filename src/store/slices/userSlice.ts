@@ -8,7 +8,6 @@ type User = {
   password: string;
   image?: string;
   isAuth: boolean;
-  token: string | undefined | null;
   errorMessage: string;
 };
 
@@ -33,7 +32,6 @@ const userSlice = createSlice({
     logOut(state) {
       state.isAuth = false;
       state.email = '';
-      state.token = undefined;
       state.username = '';
       state.image = '';
       state.errorMessage = '';
@@ -48,7 +46,6 @@ const userSlice = createSlice({
         const { user } = action.payload;
         state.email = user.email;
         state.image = user.image;
-        state.token = user.token;
         state.username = user.username;
         state.errorMessage = '';
       })
@@ -61,7 +58,6 @@ const userSlice = createSlice({
 
         state.email = user.email;
         state.image = avatar;
-        state.token = user.token;
         state.username = user.username;
       })
       .addCase(updateUser.fulfilled, (state, action) => {

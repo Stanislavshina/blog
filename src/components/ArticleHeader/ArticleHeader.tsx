@@ -3,9 +3,13 @@ import { Avatar, Button } from 'antd';
 import { converTime } from '../../utils/convertTime';
 import { nanoid } from 'nanoid';
 import cl from './ArticleHeader.module.scss';
-import useFavorite from '../../hooks/useFavorite';
 import Link from '../UI/Link/Link';
 import { useAppSelector } from '../../store/storeHooks';
+import { deleteFavorited, setFavorited } from '../../api/article/favorited';
+import Cookies from 'js-cookie';
+import { getArticle } from '../../api/article/article';
+import { useEffect } from 'react';
+import useFavorite from '../../hooks/useFavorite';
 
 interface ArticleHeaderProps {
   slug: string;
@@ -16,6 +20,7 @@ interface ArticleHeaderProps {
   username: string;
   image: string;
   link: boolean;
+  favorited: boolean;
 }
 
 const ArticleHeader: React.FC<ArticleHeaderProps> = ({
@@ -26,9 +31,11 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   tagList,
   username,
   image,
+  favorited,
   link,
 }) => {
-  const { favorite, count, handleClick } = useFavorite(slug, favoritesCount);
+  const { favorite, count, handleClick } = useFavorite(slug, favorited, favoritesCount);
+
   const { isAuth } = useAppSelector((state) => state.user);
 
   const titleLink = link ? (
@@ -53,7 +60,7 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
       onClick={handleClick}
       style={{ border: 'none', width: '13px' }}
       disabled={!isAuth}
-      icon={favorite ? <HeartFilled style={{ color: '#FF0707' }} /> : <HeartOutlined />}
+      icon={favorite && isAuth ? <HeartFilled style={{ color: '#FF0707' }} /> : <HeartOutlined />}
     />
   );
   return (
