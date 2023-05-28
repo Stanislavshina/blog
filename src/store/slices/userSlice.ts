@@ -23,8 +23,8 @@ const userSlice = createSlice({
     isAuth: false,
     email: '',
     token: undefined,
-    username: avatar,
-    image: '',
+    username: '',
+    image: avatar,
     errorMessage: '',
     password: '',
   } as User,
@@ -33,7 +33,7 @@ const userSlice = createSlice({
       state.isAuth = false;
       state.email = '';
       state.username = '';
-      state.image = '';
+      state.image = avatar;
       state.errorMessage = '';
     },
   },
@@ -45,7 +45,7 @@ const userSlice = createSlice({
 
         const { user } = action.payload;
         state.email = user.email;
-        state.image = user.image;
+        state.image = user.image || avatar;
         state.username = user.username;
         state.errorMessage = '';
       })
@@ -64,7 +64,7 @@ const userSlice = createSlice({
         const { user } = action.payload;
         state.email = user.email;
         state.username = user.username;
-        state.image = user.image ? user.image : 'https://static.productionready.io/images/smiley-cyrus.jpg';
+        state.image = user.image ? user.image : avatar;
         state.errorMessage = '';
       });
   },

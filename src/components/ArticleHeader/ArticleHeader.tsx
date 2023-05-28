@@ -5,10 +5,6 @@ import { nanoid } from 'nanoid';
 import cl from './ArticleHeader.module.scss';
 import Link from '../UI/Link/Link';
 import { useAppSelector } from '../../store/storeHooks';
-import { deleteFavorited, setFavorited } from '../../api/article/favorited';
-import Cookies from 'js-cookie';
-import { getArticle } from '../../api/article/article';
-import { useEffect } from 'react';
 import useFavorite from '../../hooks/useFavorite';
 
 interface ArticleHeaderProps {

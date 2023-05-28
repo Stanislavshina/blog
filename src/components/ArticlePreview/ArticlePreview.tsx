@@ -11,9 +11,9 @@ interface ArticlePreviewProps {
 
 const ArticlePreview: React.FC<ArticlePreviewProps> = ({ article }) => {
   const { author, body, favoritesCount, title, updatedAt, tagList, slug, favorited } = article;
-  console.log(article);
 
   const { image, username } = author;
+
   const bodyText = body ? truncateText(body, 100) : '';
 
   return (

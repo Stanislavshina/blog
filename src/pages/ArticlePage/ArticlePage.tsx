@@ -11,12 +11,13 @@ import cl from './ArticlePage.module.scss';
 import Buttons from '../../components/UI/Button/Button';
 import ArticleHeader from '../../components/ArticleHeader/ArticleHeader';
 import { deleteArticle } from '../../api/article/article';
+import Cookies from 'js-cookie';
 
 const ArticlePage: React.FC = () => {
   const [data, setData] = useState<ArticleTypes | null>(null);
-  const { username, token } = useAppSelector((state) => state.user);
+  const { username } = useAppSelector((state) => state.user);
   const { id } = useParams();
-
+  const token = Cookies.get('token');
   useEffect(() => {
     axios.get(`https://blog.kata.academy/api/articles/${id}`).then((d) => setData(d.data.article));
   }, [id]);
@@ -70,6 +71,7 @@ const ArticlePage: React.FC = () => {
   return (
     <article className={cl['article']}>
       <ArticleHeader
+        favorited={data.favorited}
         favoritesCount={data.favoritesCount}
         title={data.title}
         slug={data.slug}

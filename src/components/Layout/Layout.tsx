@@ -11,17 +11,15 @@ const Layout: React.FC = () => {
   const getLogIn = async () => {
     try {
       const res = await checkAndLogToken();
-      console.log(res);
-
       await dispatch(login(res as User));
     } catch (error) {
-      console.log(error);
+      throw new Error(`Выкидывает из логина`);
     }
   };
 
   useEffect(() => {
     getLogIn();
-  }, []);
+  });
   return (
     <div className="App">
       <Header />
