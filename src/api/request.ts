@@ -7,6 +7,7 @@ interface RequestOptions<T> {
   data?: T;
   token?: string | null | undefined;
   slug?: string;
+  headers?: Record<string, string> | undefined;
 }
 
 export const sendRequest = async <T>(options: RequestOptions<T>): Promise<T> => {

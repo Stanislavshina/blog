@@ -1,59 +1,36 @@
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '../store/storeHooks';
-import { setFavorited, deleteFavorited } from '../api/article/favorited';
+import { useState, useEffect } from 'react';
 
-const useFavorite = (slug: string, favoritesCount: number) => {
-  const { isAuth, token } = useAppSelector((state) => state.user);
-  const [favorite, setFavorite] = useState(() => isAuth && Boolean(localStorage.getItem(slug)));
-  const [count, setCount] = useState(favoritesCount);
+import Cookies from 'js-cookie';
+import { deleteFavorited, setFavorited } from '../api/article/favorited';
 
-  const handleClick = () => {
-    if (!favorite) {
-      if (token) {
-        setFavorited(slug, token)
-          .then((d: unknown) => {
-            {
-              const articleSlug = (d as { article: { slug: string } }).article.slug;
-              localStorage.setItem(articleSlug, articleSlug);
-            }
-          })
-          .then(() => {
-            setFavorite(true);
-            setCount((count) => count + 1);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+const useFavorite = (slug: string, initialFavorited: boolean, initialCount: number) => {
+  const [favorite, setFavorite] = useState(initialFavorited);
+  const [count, setCount] = useState(initialCount);
+
+  const token = Cookies.get('token');
+
+  useEffect(() => {
+    setFavorite(initialFavorited);
+    setCount(initialCount);
+  }, [initialFavorited, initialCount]);
+
+  const handleClick = async () => {
+    try {
+      if (favorite) {
+        await deleteFavorited(slug, token);
+        setCount((prevCount) => prevCount - 1);
+        setFavorite(false);
+      } else {
+        setFavorited(slug, token);
+        setCount((prevCount) => prevCount + 1);
+        setFavorite(true);
       }
-    } else {
-      if (token) {
-        deleteFavorited(slug, token)
-          .then((d: unknown) => {
-            const articleSlug = (d as { article: { slug: string } }).article.slug;
-            localStorage.removeItem(articleSlug);
-          })
-          .then(() => {
-            setFavorite(false);
-            setCount((count) => count - 1);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (!isAuth) return setFavorite(false);
-    }, 100);
-  }, [isAuth]);
-
-  return {
-    favorite,
-    count,
-    handleClick,
-  };
+  return { favorite, count, handleClick };
 };
 
 export default useFavorite;

@@ -7,12 +7,29 @@ interface ArticlesResponse {
   articlesCount: number;
 }
 
-export const getArticles = async (offset: number): Promise<ArticlesResponse> => {
+export const getArticle = async (slug: string, token: string | null | undefined) => {
+  try {
+    const res = await sendRequest({
+      method: 'get',
+      url: `/articles/${slug}`,
+      token: token,
+    });
+    console.log(res);
+
+    return res;
+  } catch (error) {
+    throw new Error('error');
+  }
+};
+
+export const getArticles = async (offset: number, token?: string): Promise<ArticlesResponse> => {
   try {
     const response = (await sendRequest({
       url: `/articles?limit=5&offset=${offset}`,
       method: 'get',
+      token,
     })) as ArticlesResponse;
+    console.log(response);
 
     return response;
   } catch (error) {

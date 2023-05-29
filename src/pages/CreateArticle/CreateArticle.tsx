@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/storeHooks';
 import { FormState } from '../../types/Form';
 import { useFieldArray, useForm } from 'react-hook-form';
 import Form from '../../components/UI/Form/Form';
 import { createArticle } from '../../api/article/article';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Cookies from 'js-cookie';
 
 type Default = {
   title: string;
@@ -15,9 +15,10 @@ type Default = {
   tagList: string[];
 };
 
+const token = Cookies.get('token');
+
 const CreateArticle: React.FC = () => {
   const navigate = useNavigate();
-  const { token } = useAppSelector((state) => state.user);
 
   const defaultValues: Default = {
     title: '',

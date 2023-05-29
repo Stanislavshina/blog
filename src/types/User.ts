@@ -3,5 +3,5 @@ export interface User {
   email: string;
   password: string;
   image?: string;
-  token?: string | undefined | null;
+  token?: string | null | undefined;
 }

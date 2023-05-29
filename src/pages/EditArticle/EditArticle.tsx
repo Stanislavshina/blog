@@ -3,20 +3,20 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import { FormState } from '../../types/Form';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useAppSelector } from '../../store/storeHooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import Form from '../../components/UI/Form/Form';
 import axios from 'axios';
 import { Spin } from 'antd';
 import { updateArticle } from '../../api/article/article';
 import { ArticleTypes } from '../../types/ArticleTypes';
+import Cookies from 'js-cookie';
 
 const EditArticle: React.FC = () => {
   const navigate = useNavigate();
-  const { token } = useAppSelector((state) => state.user);
   const [article, setArticle] = useState<ArticleTypes | null>();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const token = Cookies.get('token');
 
   const defaultValues = {
     title: article?.title || '',

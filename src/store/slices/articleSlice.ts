@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ArticleTypes } from '../../types/ArticleTypes';
 import { getArticles } from '../../api/article/article';
+import Cookies from 'js-cookie';
 
 type ArticleState = {
   articles: ArticleTypes[];
@@ -10,7 +11,13 @@ type ArticleState = {
   error: string | null;
 };
 
-export const fetchArticles = createAsyncThunk('articles/fetchArticles', getArticles);
+export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset: number) => {
+  const token = Cookies.get('token'); // Получаем токен из кук
+  console.log(token);
+
+  const response = await getArticles(offset, token); // Вызываем getArticles с токеном
+  return response;
+});
 
 const articleSlice = createSlice({
   name: 'articles',

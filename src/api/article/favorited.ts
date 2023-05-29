@@ -7,8 +7,6 @@ export const setFavorited = async (slug: string, token: string | null | undefine
       url: `/articles/${slug}/favorite`,
       token: token,
     });
-    console.log(res);
-
     return res;
   } catch (error) {
     throw new Error('error');
@@ -22,7 +20,6 @@ export const deleteFavorited = async (slug: string, token: string | null | undef
       url: `/articles/${slug}/favorite`,
       token: token,
     });
-    console.log(res);
     return res;
   } catch (error) {
     throw new Error('error');

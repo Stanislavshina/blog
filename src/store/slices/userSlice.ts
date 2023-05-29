@@ -8,7 +8,6 @@ type User = {
   password: string;
   image?: string;
   isAuth: boolean;
-  token: string | undefined | null;
   errorMessage: string;
 };
 
@@ -24,8 +23,8 @@ const userSlice = createSlice({
     isAuth: false,
     email: '',
     token: undefined,
-    username: avatar,
-    image: '',
+    username: '',
+    image: avatar,
     errorMessage: '',
     password: '',
   } as User,
@@ -33,9 +32,8 @@ const userSlice = createSlice({
     logOut(state) {
       state.isAuth = false;
       state.email = '';
-      state.token = undefined;
       state.username = '';
-      state.image = '';
+      state.image = avatar;
       state.errorMessage = '';
     },
   },
@@ -47,8 +45,7 @@ const userSlice = createSlice({
 
         const { user } = action.payload;
         state.email = user.email;
-        state.image = user.image;
-        state.token = user.token;
+        state.image = user.image || avatar;
         state.username = user.username;
         state.errorMessage = '';
       })
@@ -61,14 +58,13 @@ const userSlice = createSlice({
 
         state.email = user.email;
         state.image = avatar;
-        state.token = user.token;
         state.username = user.username;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const { user } = action.payload;
         state.email = user.email;
         state.username = user.username;
-        state.image = user.image ? user.image : 'https://static.productionready.io/images/smiley-cyrus.jpg';
+        state.image = user.image ? user.image : avatar;
         state.errorMessage = '';
       });
   },
