@@ -82,6 +82,7 @@ export const UpdateUserInfo = async ({
       },
       token,
     })) as UserResponse;
+    Cookies.set('password', password, { secure: true, expires: 7 });
     return res;
   } catch (error) {
     throw new Error('nope');

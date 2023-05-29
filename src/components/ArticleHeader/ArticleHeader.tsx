@@ -6,6 +6,7 @@ import cl from './ArticleHeader.module.scss';
 import Link from '../UI/Link/Link';
 import { useAppSelector } from '../../store/storeHooks';
 import useFavorite from '../../hooks/useFavorite';
+import { truncateText } from '../../utils/truncate';
 
 interface ArticleHeaderProps {
   slug: string;
@@ -30,13 +31,17 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   favorited,
   link,
 }) => {
+  console.log(image);
+
   const { favorite, count, handleClick } = useFavorite(slug, favorited, favoritesCount);
 
   const { isAuth } = useAppSelector((state) => state.user);
 
+  const truncateTitle = truncateText(title, 150);
+
   const titleLink = link ? (
     <Link to={`articles/${slug}`} type={'primary'}>
-      {title}
+      {truncateTitle}
     </Link>
   ) : (
     <h4 className={cl['header__title']}>{title}</h4>
