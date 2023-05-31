@@ -27,8 +27,8 @@ const ArticlePage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleDelete = async (id: string) => {
-    await deleteArticle(id, token);
+  const handleDelete = async (id: Pick<ArticleTypes, 'slug'>) => {
+    await deleteArticle(id, token as string);
     navigate('/');
   };
 
@@ -40,7 +40,7 @@ const ArticlePage: React.FC = () => {
         <Popconfirm
           placement="right"
           title="Are you sure to delete this article?"
-          onConfirm={() => handleDelete(id as string)}
+          onConfirm={() => handleDelete(id as any)}
           okText="Yes"
           cancelText="No"
         >

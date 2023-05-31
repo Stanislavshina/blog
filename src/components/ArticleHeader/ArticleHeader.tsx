@@ -31,7 +31,7 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   favorited,
   link,
 }) => {
-  const { favorite, count, handleClick } = useFavorite(slug, favorited, favoritesCount);
+  const { favorite, count, handleClick } = useFavorite(slug as any, favorited, favoritesCount);
 
   const { isAuth } = useAppSelector((state) => state.user);
 

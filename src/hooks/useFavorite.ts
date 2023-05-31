@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 
 import Cookies from 'js-cookie';
 import { deleteFavorited, setFavorited } from '../api/article/favorited';
+import { ArticleTypes } from '../types/ArticleTypes';
 
-const useFavorite = (slug: string, initialFavorited: boolean, initialCount: number) => {
+const useFavorite = (slug: Pick<ArticleTypes, 'slug'>, initialFavorited: boolean, initialCount: number) => {
   const [favorite, setFavorite] = useState(initialFavorited);
   const [count, setCount] = useState(initialCount);
 
@@ -17,11 +18,11 @@ const useFavorite = (slug: string, initialFavorited: boolean, initialCount: numb
   const handleClick = async () => {
     try {
       if (favorite) {
-        await deleteFavorited(slug, token);
+        await deleteFavorited(slug, token as string);
         setCount((prevCount) => prevCount - 1);
         setFavorite(false);
       } else {
-        setFavorited(slug, token);
+        setFavorited(slug, token as string);
         setCount((prevCount) => prevCount + 1);
         setFavorite(true);
       }

@@ -36,7 +36,7 @@ const CreateArticle: React.FC = () => {
 
   const { token } = useAppSelector((state) => state.user);
   const handleClick = async (data: Default) => {
-    await createArticle(data as any, token);
+    await createArticle(data as any, token as string);
     navigate('/');
   };
   const errorTitle = errors.title ? errors.title.message : undefined;

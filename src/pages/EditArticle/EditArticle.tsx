@@ -52,7 +52,7 @@ const EditArticle: React.FC = () => {
   }, [append, id, reset]);
 
   const handleClick = async (data: any) => {
-    await updateArticle(id, data, token);
+    await updateArticle(id as any, data, token as string);
     navigate('/');
   };
   const errorTitle = errors.title ? errors.title.message : undefined;
