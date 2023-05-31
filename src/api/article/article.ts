@@ -58,9 +58,9 @@ export const createArticle = async (data: FormState, token: string): Promise<Art
   }
 };
 
-export const updateArticle = async (slug: Pick<ArticleTypes, 'slug'>, data: ArticleTypes, token: string) => {
+export const updateArticle = async (slug: Pick<ArticleTypes, 'slug'>, data: FormState, token: string) => {
   try {
-    const { title, description, body } = data;
+    const { title, description, body, tagList } = data;
     const res = await sendRequest({
       url: `/articles/${slug}`,
       method: 'put',
@@ -69,6 +69,7 @@ export const updateArticle = async (slug: Pick<ArticleTypes, 'slug'>, data: Arti
           title,
           description,
           body,
+          tagList: tagList ? tagList.map((tag) => tag.name) : [''],
         },
       },
       token,
