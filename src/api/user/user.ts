@@ -6,12 +6,7 @@ interface UserResponse {
   user: User;
 }
 
-type Data = {
-  email: string;
-  password: string;
-};
-
-export const getLogin = async (data: Data): Promise<UserResponse> => {
+export const getLogin = async (data: Pick<User, 'email' | 'password'>): Promise<UserResponse> => {
   try {
     const { email, password } = data;
     const res = (await sendRequest({
@@ -27,7 +22,7 @@ export const getLogin = async (data: Data): Promise<UserResponse> => {
   }
 };
 
-export const checkAndLogToken = async () => {
+export const checkAndLogToken = async (): Promise<Partial<User> | undefined> => {
   const token = Cookies.get('token');
   const password = Cookies.get('password');
   if (!token) return;
@@ -37,9 +32,13 @@ export const checkAndLogToken = async () => {
       method: 'get',
       token,
     })) as UserResponse;
-    return { ...res.user, password };
+    const user = {
+      ...res.user,
+      password,
+    };
+    return user;
   } catch (error) {
-    console.log(error);
+    throw new Error('Что-то не нашелся ваш юзер');
   }
 };
 

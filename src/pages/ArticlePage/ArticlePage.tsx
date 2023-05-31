@@ -11,16 +11,19 @@ import cl from './ArticlePage.module.scss';
 import Buttons from '../../components/UI/Button/Button';
 import ArticleHeader from '../../components/ArticleHeader/ArticleHeader';
 import { deleteArticle } from '../../api/article/article';
-import Cookies from 'js-cookie';
 
 const ArticlePage: React.FC = () => {
   const [data, setData] = useState<ArticleTypes | null>(null);
   const { username } = useAppSelector((state) => state.user);
   const { id } = useParams();
-  const token = Cookies.get('token');
+  const { token } = useAppSelector((state) => state.user);
   useEffect(() => {
-    axios.get(`https://blog.kata.academy/api/articles/${id}`).then((d) => setData(d.data.article));
-  }, [id]);
+    axios
+      .get(`https://blog.kata.academy/api/articles/${id}`, {
+        headers: token ? { Authorization: `Token ${token}` } : {},
+      })
+      .then((d) => setData(d.data.article));
+  }, [id, token]);
 
   const navigate = useNavigate();
 

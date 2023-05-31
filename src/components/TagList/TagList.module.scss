@@ -1,0 +1,27 @@
+.tags{
+  display: flex;
+  align-items: center;
+}
+
+.tag-list {
+  margin-bottom: 7px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tag {
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 12px;
+  line-height: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.show-all{
+  background-color: #fff;
+  cursor: pointer;
+}

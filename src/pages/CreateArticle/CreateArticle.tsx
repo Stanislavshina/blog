@@ -6,7 +6,7 @@ import Form from '../../components/UI/Form/Form';
 import { createArticle } from '../../api/article/article';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import Cookies from 'js-cookie';
+import { useAppSelector } from '../../store/storeHooks';
 
 type Default = {
   title: string;
@@ -14,8 +14,6 @@ type Default = {
   body: string;
   tagList: string[];
 };
-
-const token = Cookies.get('token');
 
 const CreateArticle: React.FC = () => {
   const navigate = useNavigate();
@@ -36,6 +34,7 @@ const CreateArticle: React.FC = () => {
 
   const { fields, append, remove } = useFieldArray<FormState['tagList'][0] | any>({ control, name: 'tagList' });
 
+  const { token } = useAppSelector((state) => state.user);
   const handleClick = async (data: Default) => {
     await createArticle(data as any, token);
     navigate('/');

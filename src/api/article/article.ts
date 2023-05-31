@@ -7,15 +7,13 @@ interface ArticlesResponse {
   articlesCount: number;
 }
 
-export const getArticle = async (slug: string, token: string | null | undefined) => {
+export const getArticle = async (slug: Pick<ArticleTypes, 'slug'>, token: string): Promise<ArticlesResponse> => {
   try {
-    const res = await sendRequest({
+    const res = (await sendRequest({
       method: 'get',
       url: `/articles/${slug}`,
       token: token,
-    });
-    console.log(res);
-
+    })) as ArticlesResponse;
     return res;
   } catch (error) {
     throw new Error('error');
@@ -29,7 +27,6 @@ export const getArticles = async (offset: number, token?: string): Promise<Artic
       method: 'get',
       token,
     })) as ArticlesResponse;
-    console.log(response);
 
     return response;
   } catch (error) {
@@ -37,11 +34,11 @@ export const getArticles = async (offset: number, token?: string): Promise<Artic
   }
 };
 
-export const createArticle = async (data: FormState, token: string | null | undefined) => {
+export const createArticle = async (data: FormState, token: string): Promise<ArticlesResponse> => {
   const { title, description, body, tagList } = data;
 
   try {
-    const res = await sendRequest({
+    const res = (await sendRequest({
       url: '/articles',
       method: 'post',
       data: {
@@ -53,7 +50,7 @@ export const createArticle = async (data: FormState, token: string | null | unde
         },
       },
       token,
-    });
+    })) as unknown as ArticlesResponse;
 
     return res;
   } catch (error) {
@@ -61,7 +58,7 @@ export const createArticle = async (data: FormState, token: string | null | unde
   }
 };
 
-export const updateArticle = async (slug: string | undefined, data: ArticleTypes, token: string | null | undefined) => {
+export const updateArticle = async (slug: Pick<ArticleTypes, 'slug'>, data: ArticleTypes, token: string) => {
   try {
     const { title, description, body } = data;
     const res = await sendRequest({
@@ -83,10 +80,10 @@ export const updateArticle = async (slug: string | undefined, data: ArticleTypes
   }
 };
 
-export const deleteArticle = async (articleSlug: string, token: string | null | undefined): Promise<void> => {
+export const deleteArticle = async (slug: Pick<ArticleTypes, 'slug'>, token: string): Promise<void> => {
   try {
     await sendRequest({
-      url: `/articles/${articleSlug}`,
+      url: `/articles/${slug}`,
       method: 'DELETE',
       token,
     });

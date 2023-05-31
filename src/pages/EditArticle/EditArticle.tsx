@@ -9,14 +9,14 @@ import axios from 'axios';
 import { Spin } from 'antd';
 import { updateArticle } from '../../api/article/article';
 import { ArticleTypes } from '../../types/ArticleTypes';
-import Cookies from 'js-cookie';
+import { useAppSelector } from '../../store/storeHooks';
 
 const EditArticle: React.FC = () => {
   const navigate = useNavigate();
   const [article, setArticle] = useState<ArticleTypes | null>();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  const token = Cookies.get('token');
+  const { token } = useAppSelector((state) => state.user);
 
   const defaultValues = {
     title: article?.title || '',

@@ -10,13 +10,14 @@ interface PostPreviewProps {
 }
 
 const Article: React.FC<PostPreviewProps> = ({ post }) => {
-  const { author, body, favoritesCount, title, updatedAt, tagList, slug } = post;
+  const { author, body, favoritesCount, title, updatedAt, tagList, slug, favorited } = post;
   const { image, username } = author;
   const bodyText = truncateText(body, 100);
 
   return (
     <li className={cl['preview']}>
       <ArticleHeader
+        favorited={favorited}
         favoritesCount={favoritesCount}
         title={title}
         slug={slug}

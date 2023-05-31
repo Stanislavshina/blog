@@ -8,10 +8,10 @@
   padding: 17px 14px 17px 19px;
   margin-top: 24px;
   &__describe {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     color: rgba(0, 0, 0, 0.5);
+    max-width: 940px;
+    width: 100%;
+    word-break: break-word;
   }
   &__buttons-block {
     display: flex;
@@ -20,5 +20,6 @@
   }
   &__body {
     color: rgba(0, 0, 0, 0.75);
+    word-wrap: break-word;
   }
 }

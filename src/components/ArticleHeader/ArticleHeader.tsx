@@ -1,12 +1,12 @@
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { Avatar, Button } from 'antd';
 import { converTime } from '../../utils/convertTime';
-import { nanoid } from 'nanoid';
 import cl from './ArticleHeader.module.scss';
 import Link from '../UI/Link/Link';
 import { useAppSelector } from '../../store/storeHooks';
 import useFavorite from '../../hooks/useFavorite';
 import { truncateText } from '../../utils/truncate';
+import TagList from '../TagList/TagList';
 
 interface ArticleHeaderProps {
   slug: string;
@@ -31,35 +31,24 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   favorited,
   link,
 }) => {
-  console.log(image);
-
   const { favorite, count, handleClick } = useFavorite(slug, favorited, favoritesCount);
 
   const { isAuth } = useAppSelector((state) => state.user);
 
-  const truncateTitle = truncateText(title, 150);
+  const truncateTitle = truncateText(title, 50);
 
   const titleLink = link ? (
     <Link to={`articles/${slug}`} type={'primary'}>
       {truncateTitle}
     </Link>
   ) : (
-    <h4 className={cl['header__title']}>{title}</h4>
+    <h4 className={cl['header__title']}>{truncateTitle}</h4>
   );
   const date = converTime(updatedAt);
-  const tags = tagList.length ? (
-    <ul className={cl['header__tag-list']}>
-      {tagList.map((el: string) => (
-        <li key={nanoid()} className={cl['header__tag']}>
-          {el}
-        </li>
-      ))}
-    </ul>
-  ) : null;
   const postButton = (
     <Button
       onClick={handleClick}
-      style={{ border: 'none', width: '13px' }}
+      style={{ border: 'none', width: '13px', backgroundColor: '#fff' }}
       disabled={!isAuth}
       icon={favorite && isAuth ? <HeartFilled style={{ color: '#FF0707' }} /> : <HeartOutlined />}
     />
@@ -74,7 +63,7 @@ const ArticleHeader: React.FC<ArticleHeaderProps> = ({
             <span className={cl['header__favorited-span']}>{count}</span>
           </div>
         </div>
-        {tags}
+        <TagList tagList={tagList} />
       </div>
       <div className={cl['header__right-col']}>
         <div className="header__author-bio">

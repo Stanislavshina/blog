@@ -12,10 +12,8 @@ type ArticleState = {
 };
 
 export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset: number) => {
-  const token = Cookies.get('token'); // Получаем токен из кук
-  console.log(token);
-
-  const response = await getArticles(offset, token); // Вызываем getArticles с токеном
+  const token = Cookies.get('token');
+  const response = await getArticles(offset, token);
   return response;
 });
 

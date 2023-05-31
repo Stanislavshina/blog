@@ -9,6 +9,7 @@ type User = {
   image?: string;
   isAuth: boolean;
   errorMessage: string;
+  token: string | null | undefined;
 };
 
 export const login = createAsyncThunk('user/login', getLogin);
@@ -22,7 +23,7 @@ const userSlice = createSlice({
   initialState: {
     isAuth: false,
     email: '',
-    token: undefined,
+    token: '',
     username: '',
     image: avatar,
     errorMessage: '',
@@ -41,13 +42,12 @@ const userSlice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.isAuth = true;
-        console.log(state.isAuth);
-
         const { user } = action.payload;
         state.email = user.email;
         state.image = user.image || avatar;
         state.username = user.username;
         state.errorMessage = '';
+        state.token = user.token;
       })
       .addCase(login.rejected, (state) => {
         state.errorMessage = 'Что-то не так ввел или тебя не существует';
@@ -55,10 +55,10 @@ const userSlice = createSlice({
       .addCase(createNewUser.fulfilled, (state, action) => {
         state.isAuth = true;
         const { user } = action.payload;
-
         state.email = user.email;
         state.image = avatar;
         state.username = user.username;
+        state.token = user.token;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const { user } = action.payload;

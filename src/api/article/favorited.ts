@@ -1,26 +1,25 @@
+import { ArticleTypes } from '../../types/ArticleTypes';
 import { sendRequest } from '../request';
 
-export const setFavorited = async (slug: string, token: string | null | undefined) => {
+export const setFavorited = async (slug: Pick<ArticleTypes, 'slug'>, token: string): Promise<void> => {
   try {
-    const res = await sendRequest({
+    await sendRequest({
       method: 'post',
       url: `/articles/${slug}/favorite`,
       token: token,
     });
-    return res;
   } catch (error) {
     throw new Error('error');
   }
 };
 
-export const deleteFavorited = async (slug: string, token: string | null | undefined) => {
+export const deleteFavorited = async (slug: Pick<ArticleTypes, 'slug'>, token: string): Promise<void> => {
   try {
-    const res = await sendRequest({
+    await sendRequest({
       method: 'delete',
       url: `/articles/${slug}/favorite`,
       token: token,
     });
-    return res;
   } catch (error) {
     throw new Error('error');
   }

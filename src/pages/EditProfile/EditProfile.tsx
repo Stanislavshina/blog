@@ -5,7 +5,6 @@ import { User } from '../../types/User';
 import { updateUser } from '../../store/slices/userSlice';
 import Form from '../../components/UI/Form/Form';
 import Input from '../../components/UI/Input/Input';
-import Cookies from 'js-cookie';
 
 const EditProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ const EditProfile: React.FC = () => {
   const errorMail = errors.email ? `Wrong email adress` : undefined;
   const errorPasword = errors.password ? 'Пароль от 6 до 40 символов' : undefined;
   const errorImg = errors.image ? 'Введите действительный адрес' : undefined;
-  const token = Cookies.get('token');
+  const { token } = useAppSelector((state) => state.user);
 
   const handleClick: SubmitHandler<User> = (data) => {
     dispatch(updateUser({ data, token }));
